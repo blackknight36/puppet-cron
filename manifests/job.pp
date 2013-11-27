@@ -22,7 +22,7 @@
 #
 # Example usage:
 #
-#       include cron::daemon
+#       include 'cron::daemon'
 #
 #       cron::job { 'example':
 #           minute  => '*/3',
