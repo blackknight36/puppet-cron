@@ -15,18 +15,18 @@
 
 class cron::daemon {
 
-    include 'cron::params'
+    include '::cron::params'
 
-    package { $cron::params::packages:
-        ensure  => installed,
-        notify  => Service[$cron::params::service_name],
+    package { $::cron::params::packages:
+        ensure => installed,
+        notify => Service[$::cron::params::service_name],
     }
 
-    service { $cron::params::service_name:
-        enable      => true,
-        ensure      => running,
-        hasrestart  => true,
-        hasstatus   => true,
+    service { $::cron::params::service_name:
+        ensure     => running,
+        enable     => true,
+        hasrestart => true,
+        hasstatus  => true,
     }
 
 }

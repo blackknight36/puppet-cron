@@ -58,7 +58,7 @@ define cron::jobfile (
         $mode='0644',
     ) {
 
-    include 'cron::params'
+    include '::cron::params'
 
     if $filename {
         $_filename = $filename
@@ -67,15 +67,15 @@ define cron::jobfile (
     }
 
     file { "${location}/${_filename}":
-        ensure      => $ensure,
-        owner       => 'root',
-        group       => 'root',
-        mode        => $mode,
-        seluser     => 'system_u',
-        selrole     => 'object_r',
-        seltype     => 'system_cron_spool_t',
-        content     => $content,
-        source      => $source,
+        ensure  => $ensure,
+        owner   => 'root',
+        group   => 'root',
+        mode    => $mode,
+        seluser => 'system_u',
+        selrole => 'object_r',
+        seltype => 'system_cron_spool_t',
+        content => $content,
+        source  => $source,
     }
 
 }

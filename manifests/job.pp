@@ -88,7 +88,7 @@ define cron::job (
         $location='/etc/cron.d',
     ) {
 
-    include 'cron::params'
+    include '::cron::params'
 
     if $filename {
         $_filename = $filename
@@ -142,14 +142,14 @@ define cron::job (
     )
 
     file { "${location}/${_filename}":
-        ensure      => $ensure,
-        owner       => 'root',
-        group       => 'root',
-        mode        => '0644',
-        seluser     => 'system_u',
-        selrole     => 'object_r',
-        seltype     => 'system_cron_spool_t',
-        content     => template('cron/job'),
+        ensure  => $ensure,
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        seluser => 'system_u',
+        selrole => 'object_r',
+        seltype => 'system_cron_spool_t',
+        content => template('cron/job'),
     }
 
 }
