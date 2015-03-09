@@ -6,15 +6,20 @@
 #
 # === Parameters
 #
+# ==== Required
+#
 # [*namevar*]
 #   An arbitrary identifier for the job instance.  Results in a cron job file
 #   named "/etc/cron.d/$name".
 #
+# [*command*]
+#   Command to be executed by cron.
+#
+# ==== Optional
+#
 # [*ensure*]
 #   Instance is to be 'present' (default) or 'absent'.
 #
-# [*command*]
-#   Command to be executed by cron.
 #
 # [*user*]
 #   Identity that cron should should assume when running the command.

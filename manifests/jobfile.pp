@@ -6,9 +6,13 @@
 #
 # === Parameters
 #
+# ==== Required
+#
 # [*namevar*]
 #   An arbitrary identifier for the job instance.  Results in a cron job file
 #   named "$location/$name".  See also the "location" parameter.
+#
+# ==== Optional
 #
 # [*ensure*]
 #   Instance is to be 'present' (default) or 'absent'.
