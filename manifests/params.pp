@@ -7,6 +7,10 @@
 # === Authors
 #
 #   John Florian <jflorian@doubledog.org>
+#
+# === Copyright
+#
+# Copyright 2011-2015 John Florian
 
 
 class cron::params {
@@ -14,15 +18,13 @@ class cron::params {
     case $::operatingsystem {
         Fedora: {
 
-            $packages = [
-                'cronie',
-            ]
-            $service_name = 'crond'
+            $packages = 'cronie'
+            $services = 'crond'
 
         }
 
         default: {
-            fail ("The cron module is not yet supported on ${::operatingsystem}.")
+            fail ("${title}: operating system '${::operatingsystem}' is not supported")
         }
 
     }

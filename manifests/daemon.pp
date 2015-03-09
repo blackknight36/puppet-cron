@@ -6,25 +6,38 @@
 #
 # === Parameters
 #
-# NONE
+# ==== Required
+#
+# ==== Optional
+#
+# [*enable*]
+#   Instance is to be started at boot.  Either true (default) or false.
+#
+# [*ensure*]
+#   Instance is to be 'running' (default) or 'stopped'.
 #
 # === Authors
 #
 #   John Florian <jflorian@doubledog.org>
+#
+# === Copyright
+#
+# Copyright 2011-2015 John Florian
 
 
-class cron::daemon {
-
-    include '::cron::params'
+class cron::daemon (
+        $enable=true,
+        $ensure='running',
+    ) inherits ::cron::params {
 
     package { $::cron::params::packages:
         ensure => installed,
-        notify => Service[$::cron::params::service_name],
+        notify => Service[$::cron::params::services],
     }
 
-    service { $::cron::params::service_name:
-        ensure     => running,
-        enable     => true,
+    service { $::cron::params::services:
+        ensure     => $ensure,
+        enable     => $enable,
         hasrestart => true,
         hasstatus  => true,
     }
