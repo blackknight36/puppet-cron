@@ -9,13 +9,18 @@
 # ==== Required
 #
 # [*namevar*]
-#   An arbitrary identifier for the job instance.  Results in a cron job file
-#   named "$location/$name".  See also the "location" parameter.
+#   An arbitrary identifier for the job instance unless the "filename"
+#   parameter is not set in which case this must provide the value normally
+#   set with the "filename" parameter.
 #
 # ==== Optional
 #
 # [*ensure*]
 #   Instance is to be 'present' (default) or 'absent'.
+#
+# [*filename*]
+#   This may be used in place of "namevar" if it's beneficial to give namevar
+#   an arbitrary value.
 #
 # [*content*]
 #   Literal content for the job file file.  One and only one of "content"
@@ -38,11 +43,15 @@
 # === Authors
 #
 #   John Florian <jflorian@doubledog.org>
-#   John Florian <john.florian@dart.biz>
+#
+# === Copyright
+#
+# Copyright 2011-2015 John Florian
 
 
 define cron::jobfile (
         $ensure='present',
+        $filename=undef,
         $content=undef,
         $source=undef,
         $location='/etc/cron.d',
@@ -51,7 +60,13 @@ define cron::jobfile (
 
     include 'cron::params'
 
-    file { "${location}/${name}":
+    if $filename {
+        $_filename = $filename
+    } else {
+        $_filename = $name
+    }
+
+    file { "${location}/${_filename}":
         ensure      => $ensure,
         owner       => 'root',
         group       => 'root',

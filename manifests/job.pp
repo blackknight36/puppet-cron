@@ -9,8 +9,9 @@
 # ==== Required
 #
 # [*namevar*]
-#   An arbitrary identifier for the job instance.  Results in a cron job file
-#   named "/etc/cron.d/$name".
+#   An arbitrary identifier for the job instance unless the "filename"
+#   parameter is not set in which case this must provide the value normally
+#   set with the "filename" parameter.
 #
 # [*command*]
 #   Command to be executed by cron.
@@ -20,6 +21,9 @@
 # [*ensure*]
 #   Instance is to be 'present' (default) or 'absent'.
 #
+# [*filename*]
+#   This may be used in place of "namevar" if it's beneficial to give namevar
+#   an arbitrary value.
 #
 # [*user*]
 #   Identity that cron should should assume when running the command.
@@ -63,12 +67,16 @@
 # === Authors
 #
 #   John Florian <jflorian@doubledog.org>
-#   John Florian <john.florian@dart.biz>
+#
+# === Copyright
+#
+# Copyright 2011-2015 John Florian
 
 
 define cron::job (
         $command,
         $ensure='present',
+        $filename=undef,
         $minute='*',
         $hour='*',
         $dom='*',
@@ -81,6 +89,12 @@ define cron::job (
     ) {
 
     include 'cron::params'
+
+    if $filename {
+        $_filename = $filename
+    } else {
+        $_filename = $name
+    }
 
     case $dom {
         '': {
@@ -136,7 +150,7 @@ define cron::job (
         }
     }
 
-    file { "${location}/${name}":
+    file { "${location}/${_filename}":
         ensure      => $ensure,
         owner       => 'root',
         group       => 'root',
