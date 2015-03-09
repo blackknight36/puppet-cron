@@ -96,59 +96,50 @@ define cron::job (
         $_filename = $name
     }
 
-    case $dom {
-        '': {
-            fail('Required $dom (day of month) variable is not defined')
-        }
-    }
+    validate_re(
+        $dom, '^.+$',
+        "Cron::Job[${title}]: 'dom' (day of month) cannot be null"
+    )
 
-    case $dow {
-        '': {
-            fail('Required $dow (day of week) variable is not defined')
-        }
-    }
+    validate_re(
+        $dow, '^.+$',
+        "Cron::Job[${title}]: 'dow' (day of week) cannot be null"
+    )
 
-    case $hour {
-        '': {
-            fail('Required $hour variable is not defined')
-        }
-    }
+    validate_re(
+        $hour, '^.+$',
+        "Cron::Job[${title}]: 'hour' cannot be null"
+    )
 
-    case $location {
-        '': {
-            fail('Required $location variable is not defined')
-        }
-    }
+    validate_re(
+        $location, '^.+$',
+        "Cron::Job[${title}]: 'location' cannot be null"
+    )
 
-    case $minute {
-        '': {
-            fail('Required $minute variable is not defined')
-        }
-    }
+    validate_re(
+        $minute, '^.+$',
+        "Cron::Job[${title}]: 'minute' cannot be null"
+    )
 
-    case $month {
-        '': {
-            fail('Required $month variable is not defined')
-        }
-    }
+    validate_re(
+        $month, '^.+$',
+        "Cron::Job[${title}]: 'month' cannot be null"
+    )
 
-    case $path {
-        '': {
-            fail('Required $path variable is not defined')
-        }
-    }
+    validate_re(
+        $path, '^.+$',
+        "Cron::Job[${title}]: 'path' cannot be null"
+    )
 
-    case $command {
-        '': {
-            fail('Required $command variable is not defined')
-        }
-    }
+    validate_re(
+        $command, '^.+$',
+        "Cron::Job[${title}]: 'command' cannot be null"
+    )
 
-    case $user {
-        '': {
-            fail('Required $user variable is not defined')
-        }
-    }
+    validate_re(
+        $user, '^.+$',
+        "Cron::Job[${title}]: 'user' cannot be null"
+    )
 
     file { "${location}/${_filename}":
         ensure      => $ensure,
