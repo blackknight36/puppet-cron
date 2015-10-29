@@ -16,7 +16,8 @@
 class cron::params {
 
     case $::operatingsystem {
-        Fedora: {
+
+        'CentOS', 'Fedora': {
 
             $packages = 'cronie'
             $services = 'crond'
