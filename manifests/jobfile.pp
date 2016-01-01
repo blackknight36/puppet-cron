@@ -46,7 +46,7 @@
 #
 # === Copyright
 #
-# Copyright 2011-2015 John Florian
+# Copyright 2011-2016 John Florian
 
 
 define cron::jobfile (
