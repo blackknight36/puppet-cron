@@ -2,7 +2,7 @@
 #
 # == Define: cron::jobfile
 #
-# Installs a single job configuration for cron.
+# Manages a single job configuration for cron.
 #
 # === Parameters
 #
@@ -51,7 +51,7 @@
 
 define cron::jobfile (
         $ensure='present',
-        $filename=undef,
+        $filename=$title,
         $content=undef,
         $source=undef,
         $location='/etc/cron.d',
@@ -60,13 +60,7 @@ define cron::jobfile (
 
     include '::cron::params'
 
-    if $filename {
-        $_filename = $filename
-    } else {
-        $_filename = $name
-    }
-
-    file { "${location}/${_filename}":
+    file { "${location}/${filename}":
         ensure  => $ensure,
         owner   => 'root',
         group   => 'root',

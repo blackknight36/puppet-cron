@@ -2,7 +2,7 @@
 #
 # == Define: cron::job
 #
-# Installs a single job configuration for cron.
+# Manages a single job configuration for cron.
 #
 # === Parameters
 #
@@ -76,7 +76,7 @@
 define cron::job (
         $command,
         $ensure='present',
-        $filename=undef,
+        $filename=$title,
         $minute='*',
         $hour='*',
         $dom='*',
@@ -89,12 +89,6 @@ define cron::job (
     ) {
 
     include '::cron::params'
-
-    if $filename {
-        $_filename = $filename
-    } else {
-        $_filename = $name
-    }
 
     validate_re(
         $dom, '^.+$',
@@ -141,7 +135,7 @@ define cron::job (
         "Cron::Job[${title}]: 'user' cannot be null"
     )
 
-    file { "${location}/${_filename}":
+    file { "${location}/${filename}":
         ensure  => $ensure,
         owner   => 'root',
         group   => 'root',
