@@ -143,7 +143,7 @@ define cron::job (
         seluser => 'system_u',
         selrole => 'object_r',
         seltype => 'system_cron_spool_t',
-        content => template('cron/job'),
+        content => template('cron/job.erb'),
     }
 
 }
