@@ -1,0 +1,6 @@
+---
+cron::daemon::enable:       true
+cron::daemon::ensure:       running
+cron::daemon::packages:
+    - cronie
+cron::daemon::service:      crond
