@@ -1,5 +1,3 @@
-# modules/cron/manifests/jobfile.pp
-#
 # == Define: cron::jobfile
 #
 # Manages a single job configuration for cron.
@@ -15,20 +13,19 @@
 #
 # ==== Optional
 #
+# [*content*]
+#   Literal content for the job file file.  If neither "content" nor "source"
+#   is given, the content of the file will be left unmanaged.
+#
 # [*ensure*]
-#   Instance is to be 'present' (default) or 'absent'.
+#   Instance is to be 'present' (default) or 'absent'.  Alternatively,
+#   a Boolean value may also be used with true equivalent to 'present' and
+#   false equivalent to 'absent'.
 #
 # [*filename*]
-#   This may be used in place of "namevar" if it's beneficial to give namevar
-#   an arbitrary value.
-#
-# [*content*]
-#   Literal content for the job file file.  One and only one of "content"
-#   or "source" must be given.
-#
-# [*source*]
-#   URI of the job file file content.  One and only one of "content" or
-#   "source" must be given.
+#   Name to be given to the job file file, without any path details.  This may
+#   be used in place of "namevar" if it's beneficial to give namevar an
+#   arbitrary value.
 #
 # [*location*]
 #   File system path to where the cron job file is to be installed.  Defaults
@@ -40,25 +37,29 @@
 #   files.  This might need to be something like '0755' if "location" is
 #   "/etc/cron.daily" or similar.
 #
+# [*source*]
+#   URI of the job file file content.  If neither "content" nor "source" is
+#   given, the content of the file will be left unmanaged.
+#
 # === Authors
 #
 #   John Florian <jflorian@doubledog.org>
 #
 # === Copyright
 #
-# Copyright 2011-2016 John Florian
+# Copyright 2011-2017 John Florian
 
 
 define cron::jobfile (
-        $ensure='present',
-        $filename=$title,
-        $content=undef,
-        $source=undef,
-        $location='/etc/cron.d',
-        $mode='0644',
+        Variant[Boolean, Enum['present', 'absent']] $ensure='present',
+        String[1]           $filename=$title,
+        Optional[String[1]] $content=undef,
+        Optional[String[1]] $source=undef,
+        String[1]           $location='/etc/cron.d',
+        Pattern[/[0-7]{4}/] $mode='0644',
     ) {
 
-    include '::cron::params'
+    require '::cron'
 
     file { "${location}/${filename}":
         ensure  => $ensure,
