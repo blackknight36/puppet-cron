@@ -79,8 +79,8 @@
 
 
 define cron::job (
-        Variant[Boolean, Enum['present', 'absent']] $ensure='present',
         String[1]           $command,
+        Variant[Boolean, Enum['present', 'absent']] $ensure='present',
         String[1]           $filename=$title,
         String[1]           $minute='*',
         String[1]           $hour='*',
