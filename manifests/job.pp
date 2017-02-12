@@ -94,7 +94,7 @@ define cron::job (
         String[1]           $location='/etc/cron.d',
     ) {
 
-    require '::cron'
+    include '::cron::daemon'
 
     file { "${location}/${filename}":
         ensure  => $ensure,

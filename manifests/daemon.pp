@@ -2,6 +2,10 @@
 #
 # Manages the cron daemon.
 #
+# It is generally unnecessary to include this class directly.  Simply define
+# any cron::job or cron::jobfile instances you need and this will be included,
+# as necessary.
+#
 # === Parameters
 #
 # ==== Required
