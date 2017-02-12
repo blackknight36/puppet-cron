@@ -1,8 +1,10 @@
-# modules/cron/manifests/daemon.pp
-#
 # == Class: cron::daemon
 #
-# Configures a host as a cron daemon.
+# Manages the cron daemon.
+#
+# It is generally unnecessary to include this class directly.  Simply define
+# any cron::job or cron::jobfile instances you need and this will be included,
+# as necessary.
 #
 # === Parameters
 #
@@ -14,7 +16,15 @@
 #   Instance is to be started at boot.  Either true (default) or false.
 #
 # [*ensure*]
-#   Instance is to be 'running' (default) or 'stopped'.
+#   Instance is to be 'running' (default) or 'stopped'.  Alternatively,
+#   a Boolean value may also be used with true equivalent to 'running' and
+#   false equivalent to 'stopped'.
+#
+# [*packages*]
+#   An array of package names needed for a cron daemon installation.
+#
+# [*service*]
+#   The service name of the cron daemon.
 #
 # === Authors
 #
@@ -22,20 +32,22 @@
 #
 # === Copyright
 #
-# Copyright 2011-2016 John Florian
+# Copyright 2011-2017 John Florian
 
 
 class cron::daemon (
-        $enable=true,
-        $ensure='running',
-    ) inherits ::cron::params {
+        Variant[Boolean, Enum['running', 'stopped']] $ensure='running',
+        Boolean         $enable=true,
+        Array[String]   $packages,
+        String          $service,
+    ) {
 
-    package { $::cron::params::packages:
+    package { $packages:
         ensure => installed,
-        notify => Service[$::cron::params::services],
+        notify => Service[$service],
     }
 
-    service { $::cron::params::services:
+    service { $service:
         ensure     => $ensure,
         enable     => $enable,
         hasrestart => true,
