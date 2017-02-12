@@ -1,5 +1,3 @@
-# modules/cron/manifests/job.pp
-#
 # == Define: cron::job
 #
 # Manages a single job configuration for cron.
@@ -18,51 +16,58 @@
 #
 # ==== Optional
 #
-# [*ensure*]
-#   Instance is to be 'present' (default) or 'absent'.
-#
-# [*filename*]
-#   This may be used in place of "namevar" if it's beneficial to give namevar
-#   an arbitrary value.
-#
-# [*user*]
-#   Identity that cron should should assume when running the command.
-#   Defaults to "root".
-#
-# [*minute*]
-#   Valid: 0-59, ranges via hyphen, lists via comma or steps via slashes or no
-#   restriction via star.  Defaults to "*".
-#
-# [*hour*]
-#   Valid: 0-23, ranges via hyphen, lists via comma or steps via slashes or no
-#   restriction via star.  Defaults to "*".
-#
 # [*dom*]
 #   Valid: 1-31, ranges via hyphen, lists via comma or steps via slashes or no
 #   restriction via star.  Defaults to "*".
-#
-# [*month*]
-#   Valid: 1-12, names (e.g., "Feb"), ranges via hyphen, lists via comma or
-#   steps via slashes or no restriction via star.  Defaults to "*".
 #
 # [*dow*]
 #   Valid: 0-7, names (e.g., "Mon"), ranges via hyphen, lists via comma or
 #   steps via slashes or no restriction via star.  Defaults to "*".  Note that
 #   either 0 or 7 may be used to indicate Sunday.
 #
-# [*mailto*]
-#   Any stdout/stderr will be sent here.  May be a user name for localhost
-#   mail or a fully qualified email address.  If set to "" (an empty string),
-#   no mail will be sent.  Defaults to "root".
+# [*ensure*]
+#   Instance is to be 'present' (default) or 'absent'.  Alternatively,
+#   a Boolean value may also be used with true equivalent to 'present' and
+#   false equivalent to 'absent'.
 #
-# [*path*]
-#   Executable search path to be used in environment while running command.
-#   Defaults to "/sbin:/bin:/usr/sbin:/usr/bin".
+# [*filename*]
+#   This may be used in place of "namevar" if it's beneficial to give namevar
+#   an arbitrary value.
+#
+# [*hour*]
+#   Valid: 0-23, ranges via hyphen, lists via comma or steps via slashes or no
+#   restriction via star.  Defaults to "*".
 #
 # [*location*]
 #   File system path to where the cron job file is to be installed.  Defaults
 #   to "/etc/cron.d" which is appropriate for most job files.  See also the
 #   "namevar" parameter.
+#
+# [*mailto*]
+#   Any stdout/stderr will be sent here.  May be a user name for localhost
+#   mail or a fully qualified email address.  If set to "" (an empty string),
+#   no mail will be sent.  Defaults to "root".
+#
+# [*minute*]
+#   Valid: 0-59, ranges via hyphen, lists via comma or steps via slashes or no
+#   restriction via star.  Defaults to "*".
+#
+# [*mode*]
+#   File access mode.  Defaults to '0644' which is appropriate for most jobs.
+#   This might need to be something like '0755' if "location" is
+#   "/etc/cron.daily" or similar.
+#
+# [*month*]
+#   Valid: 1-12, names (e.g., "Feb"), ranges via hyphen, lists via comma or
+#   steps via slashes or no restriction via star.  Defaults to "*".
+#
+# [*path*]
+#   Executable search path to be used in environment while running command.
+#   Defaults to "/sbin:/bin:/usr/sbin:/usr/bin".
+#
+# [*user*]
+#   Identity that cron should should assume when running the command.
+#   Defaults to "root".
 #
 # === Authors
 #
@@ -70,76 +75,32 @@
 #
 # === Copyright
 #
-# Copyright 2011-2016 John Florian
+# Copyright 2011-2017 John Florian
 
 
 define cron::job (
-        $command,
-        $ensure='present',
-        $filename=$title,
-        $minute='*',
-        $hour='*',
-        $dom='*',
-        $month='*',
-        $dow='*',
-        $mailto='root',
-        $path='/sbin:/bin:/usr/sbin:/usr/bin',
-        $user='root',
-        $location='/etc/cron.d',
+        Variant[Boolean, Enum['present', 'absent']] $ensure='present',
+        String[1]           $command,
+        String[1]           $filename=$title,
+        String[1]           $minute='*',
+        String[1]           $hour='*',
+        String[1]           $dom='*',
+        Pattern[/[0-7]{4}/] $mode='0644',
+        String[1]           $month='*',
+        String[1]           $dow='*',
+        String              $mailto='root',
+        String[1]           $path='/sbin:/bin:/usr/sbin:/usr/bin',
+        String[1]           $user='root',
+        String[1]           $location='/etc/cron.d',
     ) {
 
-    include '::cron::params'
-
-    validate_re(
-        $dom, '^.+$',
-        "Cron::Job[${title}]: 'dom' (day of month) cannot be null"
-    )
-
-    validate_re(
-        $dow, '^.+$',
-        "Cron::Job[${title}]: 'dow' (day of week) cannot be null"
-    )
-
-    validate_re(
-        $hour, '^.+$',
-        "Cron::Job[${title}]: 'hour' cannot be null"
-    )
-
-    validate_re(
-        $location, '^.+$',
-        "Cron::Job[${title}]: 'location' cannot be null"
-    )
-
-    validate_re(
-        $minute, '^.+$',
-        "Cron::Job[${title}]: 'minute' cannot be null"
-    )
-
-    validate_re(
-        $month, '^.+$',
-        "Cron::Job[${title}]: 'month' cannot be null"
-    )
-
-    validate_re(
-        $path, '^.+$',
-        "Cron::Job[${title}]: 'path' cannot be null"
-    )
-
-    validate_re(
-        $command, '^.+$',
-        "Cron::Job[${title}]: 'command' cannot be null"
-    )
-
-    validate_re(
-        $user, '^.+$',
-        "Cron::Job[${title}]: 'user' cannot be null"
-    )
+    require '::cron'
 
     file { "${location}/${filename}":
         ensure  => $ensure,
         owner   => 'root',
         group   => 'root',
-        mode    => '0644',
+        mode    => $mode,
         seluser => 'system_u',
         selrole => 'object_r',
         seltype => 'system_cron_spool_t',
