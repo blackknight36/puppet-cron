@@ -36,8 +36,8 @@
 
 
 class cron::daemon (
-        Variant[Boolean, Enum['running', 'stopped']] $ensure='running',
-        Boolean         $enable=true,
+        Variant[Boolean, Enum['running', 'stopped']] $ensure,
+        Boolean         $enable,
         Array[String]   $packages,
         String          $service,
     ) {
