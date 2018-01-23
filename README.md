@@ -36,6 +36,7 @@ This module lets you manage the configuration of the cron daemon and more import
 
 **Defined types:**
 
+* [cron::job](#cronjob-defined-type)
 * [cron::jobfile](#cronjobfile-defined-type)
 
 
@@ -60,9 +61,59 @@ The service name of the cron daemon.
 
 ### Defined types
 
+#### cron::job defined type
+
+This defined type manages a single job configuration for cron.  It provides full parametric control of the job definition from Puppet.  If you would rather just push a file with the relevant content, look to `cron::jobfile` instead.
+
+##### `namevar` (required)
+An arbitrary identifier for the job instance unless the `filename` parameter is not set in which case this must provide the value normally set with the `filename` parameter.
+
+##### `ensure`
+Instance is to be `present` (default) or `absent`.  Alternatively, a Boolean value may also be used with `true` equivalent to `present` and `false` equivalent to `absent`.
+
+##### `filename`
+Name to be given to the job file file, without any path details.  This may be used in place of `namevar` if it is beneficial to give `namevar` an arbitrary value.
+
+##### `location`
+File system path to where the cron job file is to be installed.  Defaults to `/etc/cron.d` which is appropriate for most job files.  See also the `namevar` and `filename` parameters.
+
+##### `mailto`
+Any stdout/stderr will be mailed here.  May be a user name for localhost mail or a fully qualified email address.  If set to `""` (an empty string), no mail will be sent.  Defaults to `root`.
+
+##### `mode`
+File access mode.  Defaults to `0644` which is appropriate for most job files.  This might need to be something like `0755` if `location` is `/etc/cron.daily` or similar.  If in doubt, consult your CRONTAB(5) man page.
+
+##### `path`
+The environment `PATH` to be used while running `command`.  Defaults to `/sbin:/bin:/usr/sbin:/usr/bin`.
+
+##### `user`
+Identity that cron should should assume when running the command.  Defaults to "root".
+
+
+**The following parameters are passed directly into the crontab.  They are  implementation dependent and are not validated here.  Consult your CRONTAB(5) man page for specifications.**
+
+##### `command` (required)
+Command to be executed by cron.  Some implementations allow magic characters (e.g., `%`) leading to special features.
+
+##### `dom`
+A string expressing the days of the month that the job is to be executed.  Typically an integer ranging from `1` to `31` but often may allow ranges, lists and step values.  The default is `*`.
+
+##### `dow`
+A string expressing the days of the week that the job is to be executed.  Typically an integer ranging from `0` (Sunday) to `7` (also Sunday) but often may allow ranges, lists and step values.  Mnemonics (e.g., `Fri`) are often accepted.  The default is `*`.
+
+##### `hour`
+A string expressing the hours of the day that the job is to be executed.  Typically an integer ranging from `0` to `23` but often may allow ranges, lists and step values.  The default is `*`.
+
+##### `minute`
+A string expressing the minutes of the hour that the job is to be executed.  Typically an integer ranging from `0` to `59` but often may allow ranges, lists and step values.  The default is `*`.
+
+##### `month`
+A string expressing the months of the year that the job is to be executed.  Typically an integer ranging from `1` (January) to `12` (December) but often may allow ranges, lists and step values.  Mnemonics (e.g., `Oct`) are often accepted.  The default is `*`.
+
+
 #### cron::jobfile defined type
 
-This defined type manages a single job configuration file for cron.  The job file may actually consist of any number of cron jobs.
+This defined type manages a single job configuration file for cron.  The job file may actually consist of any number of cron jobs.  It provides a brute force approach where Puppet is merely dealing with a file (static or dynamic via a template) containing the (presumed) correct content.  For full parametric control of the job definition from Puppet, look to `cron::job` instead.
 
 ##### `namevar` (required)
 An arbitrary identifier for the job instance unless the `filename` parameter is not set in which case this must provide the value normally set with the `filename` parameter.
