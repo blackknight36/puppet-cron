@@ -32,10 +32,28 @@ This module lets you manage the configuration of the cron daemon and more import
 
 **Classes:**
 
+* [cron::daemon](#crondaemon-class)
+
 **Defined types:**
 
 
 ### Classes
+
+#### cron::daemon class
+
+This class manages the cron package and service.  It is generally unnecessary to include this class directly.  Instead, simply define any `cron::job` or `cron::jobfile` instances you need and this will be included, as necessary.
+
+##### `enable`
+Instance is to be started at boot.  Either `true` (default) or `false`.
+
+##### `ensure`
+Instance is to be `running` (default) or `stopped`.  Alternatively, a Boolean value may also be used with `true` equivalent to `running` and `false` equivalent to `stopped`.
+
+##### `packages`
+An array of package names needed for the cron installation.  The default should be correct for supported platforms.
+
+##### `service`
+The service name of the cron daemon.
 
 
 ### Defined types
