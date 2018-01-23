@@ -36,6 +36,8 @@ This module lets you manage the configuration of the cron daemon and more import
 
 **Defined types:**
 
+* [cron::jobfile](#cronjobfile-defined-type)
+
 
 ### Classes
 
@@ -57,6 +59,31 @@ The service name of the cron daemon.
 
 
 ### Defined types
+
+#### cron::jobfile defined type
+
+This defined type manages a single job configuration file for cron.  The job file may actually consist of any number of cron jobs.
+
+##### `namevar` (required)
+An arbitrary identifier for the job instance unless the `filename` parameter is not set in which case this must provide the value normally set with the `filename` parameter.
+
+##### `content`
+Literal content for the job file file.  If neither `content` nor `source` is given, the content of the file will be left unmanaged, though other aspects will continue to be managed.
+
+##### `ensure`
+Instance is to be `present` (default) or `absent`.  Alternatively, a Boolean value may also be used with `true` equivalent to `present` and `false` equivalent to `absent`.
+
+##### `filename`
+Name to be given to the job file file, without any path details.  This may be used in place of `namevar` if it is beneficial to give `namevar` an arbitrary value.
+
+##### `location`
+File system path to where the cron job file is to be installed.  Defaults to `/etc/cron.d` which is appropriate for most job files.  See also the `namevar` and `filename` parameters.
+
+##### `mode`
+File access mode.  Defaults to `0644` which is appropriate for most job files.  This might need to be something like `0755` if `location` is `/etc/cron.daily` or similar.  If in doubt, consult your CRONTAB(5) man page.
+
+##### `source`
+URI of the job file file content.  If neither `content` nor `source` is given, the content of the file will be left unmanaged, though other aspects will continue to be managed.
 
 
 ## Limitations
