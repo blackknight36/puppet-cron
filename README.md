@@ -28,6 +28,25 @@ This module lets you manage the configuration of the cron daemon and more import
 
 ## Usage
 
+Here is a pair of quick and useful examples I apply to all of my Puppet nodes.
+
+```puppet
+::cron::job { 'puppet-failsafe':
+    hour    => '5',
+    minute  => '55',
+    command => "systemctl is-active puppet &> /dev/null || systemctl status puppet | mailx -s 'Puppet Inactive on ${::hostname}' root",
+}
+
+$get_env_cmd = "$(puppet config print environment --section agent)"
+
+::cron::job { 'puppet-env-check':
+    hour    => '5',
+    minute  => '57',
+    command => "test ${get_env_cmd} = 'production' || echo \"The default environment is presently '${get_env_cmd}'.\" | mailx -s 'Puppet on ${::hostname} not using production environment' root",
+}
+```
+
+
 ## Reference
 
 **Classes:**
