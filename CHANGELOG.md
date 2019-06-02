@@ -24,6 +24,7 @@ All notable changes to this project (since v1.2.0) will be documented in this fi
 - Fedora 28-30 support
 - dependency on the `doubledog-ddolib` module
 - `cron` class
+- `cron::jobs` and `cron::jobfiles` parameters to permit entire control via Hiera
 ### Changed
 - eliminated absolute namespaces in Puppet resource references
 - `cron` class becomes simply `cron`

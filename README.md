@@ -75,13 +75,19 @@ $get_env_cmd = "$(puppet config print environment --section agent)"
 
 #### cron class
 
-This class manages the cron package and service.  It is generally unnecessary to include this class directly.
+This class manages the cron package and service.
 
 ##### `enable`
 Instance is to be started at boot.  Either `true` (default) or `false`.
 
 ##### `ensure`
 Instance is to be `'running'` (default) or `'stopped'`.  Alternatively, a Boolean value may also be used with `true` equivalent to `'running'` and `false` equivalent to `'stopped'`.
+
+##### `jobfiles`
+A hash whose keys are configuration resource names and whose values are hashes comprising the same parameters you would otherwise pass to the [cron::jobfile](#cronjobfile-defined-type) defined type.  The default is none.
+
+##### `jobs`
+A hash whose keys are configuration resource names and whose values are hashes comprising the same parameters you would otherwise pass to the [cron::job](#cronjob-defined-type) defined type.  The default is none.
 
 ##### `packages`
 An array of package names needed for the cron installation.  The default should be correct for supported platforms.

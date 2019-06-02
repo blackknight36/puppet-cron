@@ -6,6 +6,8 @@
 
 cron::enable:       true
 cron::ensure:       running
+cron::jobfiles:     {}
+cron::jobs:         {}
 cron::packages:
     - cronie
 cron::service:      crond

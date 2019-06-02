@@ -17,6 +17,8 @@
 class cron (
         Ddolib::Service::Ensure $ensure,
         Boolean                 $enable,
+        Hash[String[1], Hash]   $jobfiles,
+        Hash[String[1], Hash]   $jobs,
         Array[String]           $packages,
         String                  $service,
     ) {
@@ -32,5 +34,8 @@ class cron (
         hasrestart => true,
         hasstatus  => true,
     }
+
+    create_resources(cron::job, $jobs)
+    create_resources(cron::jobfile, $jobfiles)
 
 }
