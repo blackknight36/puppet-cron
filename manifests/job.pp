@@ -1,3 +1,4 @@
+#
 # == Define: cron::job
 #
 # Manages a single job configuration for cron.
@@ -8,7 +9,9 @@
 #
 # === Copyright
 #
-# Copyright 2011-2018 John Florian
+# This file is part of the doubledog-cron Puppet module.
+# Copyright 2011-2019 John Florian
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 
 define cron::job (

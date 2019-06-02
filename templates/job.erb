@@ -1,7 +1,11 @@
-# Cron job for <%= @name %> on <%= @fqdn %>.
+<%#
+This file is part of the doubledog-cron Puppet module.
+Copyright 2011-2019 John Florian
+SPDX-License-Identifier: GPL-3.0-or-later
+-%>
+# This file is managed by Puppet via the "<%= @module_name %>" module.
 #
-# WARNING:
-#   This file is managed by Puppet via the "<%= @module_name %>" module.
+# Cron job for <%= @name %> on <%= @fqdn %>.
 
 MAILTO="<%= @mailto %>"
 PATH=<%= @path %>
