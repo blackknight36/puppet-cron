@@ -15,19 +15,19 @@
 
 
 define cron::job (
-        String[1]           $command,
-        Variant[Boolean, Enum['present', 'absent']] $ensure='present',
-        String[1]           $filename=$title,
-        String[1]           $minute='*',
-        String[1]           $hour='*',
-        String[1]           $dom='*',
-        Pattern[/[0-7]{4}/] $mode='0644',
-        String[1]           $month='*',
-        String[1]           $dow='*',
-        String              $mailto='root',
-        String[1]           $path='/sbin:/bin:/usr/sbin:/usr/bin',
-        String[1]           $user='root',
-        String[1]           $location='/etc/cron.d',
+        String[1]                       $command,
+        Ddolib::File::Ensure::Limited   $ensure='present',
+        String[1]                       $filename=$title,
+        String[1]                       $minute='*',
+        String[1]                       $hour='*',
+        String[1]                       $dom='*',
+        Pattern[/[0-7]{4}/]             $mode='0644',
+        String[1]                       $month='*',
+        String[1]                       $dow='*',
+        String                          $mailto='root',
+        String[1]                       $path='/sbin:/bin:/usr/sbin:/usr/bin',
+        String[1]                       $user='root',
+        String[1]                       $location='/etc/cron.d',
     ) {
 
     include '::cron::daemon'

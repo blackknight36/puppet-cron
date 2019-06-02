@@ -15,12 +15,12 @@
 
 
 define cron::jobfile (
-        Variant[Boolean, Enum['present', 'absent']] $ensure='present',
-        String[1]           $filename=$title,
-        Optional[String[1]] $content=undef,
-        Optional[String[1]] $source=undef,
-        String[1]           $location='/etc/cron.d',
-        Pattern[/[0-7]{4}/] $mode='0644',
+        Ddolib::File::Ensure::Limited   $ensure='present',
+        String[1]                       $filename=$title,
+        Optional[String[1]]             $content=undef,
+        Optional[String[1]]             $source=undef,
+        String[1]                       $location='/etc/cron.d',
+        Pattern[/[0-7]{4}/]             $mode='0644',
     ) {
 
     include '::cron::daemon'

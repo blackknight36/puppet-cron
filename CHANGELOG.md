@@ -22,11 +22,13 @@ All notable changes to this project (since v1.2.0) will be documented in this fi
 ## [1.3.0] WIP
 ### Added
 - Fedora 28-30 support
+- dependency on the `doubledog-ddolib` module
 ### Changed
 ### Deprecated
 ### Removed
 - Fedora 25-27 support
 ### Fixed
+- `cron::job::ensure` and `cron::jobfile::ensure` cannot accept Boolean values
 ### Security
 
 ## [1.2.0 and prior] 2018-12-15

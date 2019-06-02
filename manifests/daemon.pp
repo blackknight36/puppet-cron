@@ -15,10 +15,10 @@
 
 
 class cron::daemon (
-        Variant[Boolean, Enum['running', 'stopped']] $ensure,
-        Boolean         $enable,
-        Array[String]   $packages,
-        String          $service,
+        Ddolib::Service::Ensure $ensure,
+        Boolean                 $enable,
+        Array[String]           $packages,
+        String                  $service,
     ) {
 
     package { $packages:

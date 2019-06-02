@@ -93,7 +93,7 @@ This defined type manages a single job configuration for cron.  It provides full
 An arbitrary identifier for the job instance unless the `filename` parameter is not set in which case this must provide the value normally set with the `filename` parameter.
 
 ##### `ensure`
-Instance is to be `present` (default) or `absent`.  Alternatively, a Boolean value may also be used with `true` equivalent to `present` and `false` equivalent to `absent`.
+Instance is to be `present` (default) or `absent`.
 
 ##### `filename`
 Name to be given to the job file file, without any path details.  This may be used in place of `namevar` if it is beneficial to give `namevar` an arbitrary value.
@@ -146,7 +146,7 @@ An arbitrary identifier for the job instance unless the `filename` parameter is 
 Literal content for the job file file.  If neither `content` nor `source` is given, the content of the file will be left unmanaged, though other aspects will continue to be managed.
 
 ##### `ensure`
-Instance is to be `present` (default) or `absent`.  Alternatively, a Boolean value may also be used with `true` equivalent to `present` and `false` equivalent to `absent`.
+Instance is to be `present` (default) or `absent`.
 
 ##### `filename`
 Name to be given to the job file file, without any path details.  This may be used in place of `namevar` if it is beneficial to give `namevar` an arbitrary value.
