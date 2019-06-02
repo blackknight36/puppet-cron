@@ -68,6 +68,8 @@ $get_env_cmd = "$(puppet config print environment --section agent)"
 
 **Data types:**
 
+* [Cron::Timespec](#crontimespec-data-type)
+
 **Facts:**
 
 
@@ -172,6 +174,10 @@ File access mode.  Defaults to `0644` which is appropriate for most job files.  
 
 
 ### Data types
+
+#### `Cron::Timespec` data type
+
+Matches all positive integers and non-empty strings.
 
 ### Facts
 

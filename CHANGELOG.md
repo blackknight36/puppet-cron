@@ -25,9 +25,11 @@ All notable changes to this project (since v1.2.0) will be documented in this fi
 - dependency on the `doubledog-ddolib` module
 - `cron` class
 - `cron::jobs` and `cron::jobfiles` parameters to permit entire control via Hiera
+- `Cron::Timespec` data type
 ### Changed
 - eliminated absolute namespaces in Puppet resource references
 - `cron` class becomes simply `cron`
+- `cron::job` parameters `minute`, `hour`, `dom`, `month` and `dow` now allow integers (in addition to strings)
 ### Deprecated
 ### Removed
 - Fedora 25-27 support
