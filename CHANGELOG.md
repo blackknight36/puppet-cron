@@ -19,15 +19,18 @@ Template
 
 All notable changes to this project (since v1.2.0) will be documented in this file.  The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [1.3.0] WIP
+## [2.0.0] WIP
 ### Added
 - Fedora 28-30 support
 - dependency on the `doubledog-ddolib` module
+- `cron` class
 ### Changed
 - eliminated absolute namespaces in Puppet resource references
+- `cron` class becomes simply `cron`
 ### Deprecated
 ### Removed
 - Fedora 25-27 support
+- `cron` class
 ### Fixed
 - `cron::job::ensure` and `cron::jobfile::ensure` cannot accept Boolean values
 ### Security

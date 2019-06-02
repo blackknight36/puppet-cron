@@ -1,5 +1,5 @@
 #
-# == Class: cron::daemon
+# == Class: cron
 #
 # Manages the cron daemon.
 #
@@ -14,7 +14,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 
-class cron::daemon (
+class cron (
         Ddolib::Service::Ensure $ensure,
         Boolean                 $enable,
         Array[String]           $packages,

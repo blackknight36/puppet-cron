@@ -59,7 +59,7 @@ $get_env_cmd = "$(puppet config print environment --section agent)"
 
 **Classes:**
 
-* [cron::daemon](#crondaemon-class)
+* [cron](#cron-class)
 
 **Defined types:**
 
@@ -73,7 +73,7 @@ $get_env_cmd = "$(puppet config print environment --section agent)"
 
 ### Classes
 
-#### cron::daemon class
+#### cron class
 
 This class manages the cron package and service.  It is generally unnecessary to include this class directly.
 

@@ -4,8 +4,8 @@
 
 ---
 
-cron::daemon::enable:       true
-cron::daemon::ensure:       running
-cron::daemon::packages:
+cron::enable:       true
+cron::ensure:       running
+cron::packages:
     - cronie
-cron::daemon::service:      crond
+cron::service:      crond

@@ -23,7 +23,7 @@ define cron::jobfile (
         Pattern[/[0-7]{4}/]             $mode='0644',
     ) {
 
-    include 'cron::daemon'
+    include 'cron'
 
     file { "${location}/${filename}":
         ensure  => $ensure,

@@ -30,7 +30,7 @@ define cron::job (
         String[1]                       $location='/etc/cron.d',
     ) {
 
-    include 'cron::daemon'
+    include 'cron'
 
     file { "${location}/${filename}":
         ensure  => $ensure,
