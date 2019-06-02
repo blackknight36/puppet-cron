@@ -1,3 +1,4 @@
+#
 # == Define: cron::job
 #
 # Manages a single job configuration for cron.
@@ -8,26 +9,28 @@
 #
 # === Copyright
 #
-# Copyright 2011-2018 John Florian
+# This file is part of the doubledog-cron Puppet module.
+# Copyright 2011-2019 John Florian
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 
 define cron::job (
-        String[1]           $command,
-        Variant[Boolean, Enum['present', 'absent']] $ensure='present',
-        String[1]           $filename=$title,
-        String[1]           $minute='*',
-        String[1]           $hour='*',
-        String[1]           $dom='*',
-        Pattern[/[0-7]{4}/] $mode='0644',
-        String[1]           $month='*',
-        String[1]           $dow='*',
-        String              $mailto='root',
-        String[1]           $path='/sbin:/bin:/usr/sbin:/usr/bin',
-        String[1]           $user='root',
-        String[1]           $location='/etc/cron.d',
+        String[1]                       $command,
+        Ddolib::File::Ensure::Limited   $ensure='present',
+        String[1]                       $filename=$title,
+        Cron::Timespec                  $minute='*',
+        Cron::Timespec                  $hour='*',
+        Cron::Timespec                  $dom='*',
+        Pattern[/[0-7]{4}/]             $mode='0644',
+        Cron::Timespec                  $month='*',
+        Cron::Timespec                  $dow='*',
+        String                          $mailto='root',
+        String[1]                       $path='/sbin:/bin:/usr/sbin:/usr/bin',
+        String[1]                       $user='root',
+        String[1]                       $location='/etc/cron.d',
     ) {
 
-    include '::cron::daemon'
+    include 'cron'
 
     file { "${location}/${filename}":
         ensure  => $ensure,

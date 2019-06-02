@@ -1,6 +1,13 @@
+# This file is part of the doubledog-cron Puppet module.
+# Copyright 2017-2019 John Florian
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 ---
-cron::daemon::enable:       true
-cron::daemon::ensure:       running
-cron::daemon::packages:
+
+cron::enable:       true
+cron::ensure:       running
+cron::jobfiles:     {}
+cron::jobs:         {}
+cron::packages:
     - cronie
-cron::daemon::service:      crond
+cron::service:      crond
