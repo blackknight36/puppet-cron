@@ -23,9 +23,12 @@ class cron (
         String                  $service,
     ) {
 
-    package { $packages:
-        ensure => installed,
-        notify => Service[$service],
+    # cron is part of the base OS, not a package
+    if $facts['operatingsystem'] != 'FreeBSD' {
+        package { $packages:
+            ensure => installed,
+            notify => Service[$service],
+        }
     }
 
     service { $service:

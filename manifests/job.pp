@@ -35,7 +35,10 @@ define cron::job (
     file { "${location}/${filename}":
         ensure  => $ensure,
         owner   => 'root',
-        group   => 'root',
+        group   => $facts['operatingsystem'] ? {
+            'FreeBSD' => 'wheel',
+            default   => 'root',
+        },
         mode    => $mode,
         seluser => 'system_u',
         selrole => 'object_r',
